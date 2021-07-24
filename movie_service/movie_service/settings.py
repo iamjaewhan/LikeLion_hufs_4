@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'movies',
     'account',
-    
+   
 ]
 
 MIDDLEWARE = [
@@ -102,6 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTH_USER_MODEL='account.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
