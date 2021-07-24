@@ -1,9 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 
 import requests
 
 from .models import Staff, Movies
-
 
 
 # Create your views here.
@@ -43,3 +42,8 @@ def init_db(request):
             new_staff.movie=Movies.objects.get(pk=new_movie.id)
             new_staff.save()
     return redirect('index')
+
+def detail(request, id):
+    movie = Movies.objects.get(id=id)
+    staffs = Staff.objects.filter(movie=movie)
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs})
