@@ -1,45 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-        img {width: 100px}
-    </style>
-  </head>
-    <h1>hi</h1>
+{% extends 'base.html' %} {% block content %}
 
-    <form action="" method="get">    
-        <input type="text" name="search" value="{{ search }}"/>
-        <button type="submit">검색</button>
-    </form>
-    <a href="{% url 'index' %}"><button type="init">초기화</button></a>
+<h1>Movie Service</h1>
 
-    <div>
-        {% for movie in movies %}
-        <span>
-            <img src="{{movie.poster_url}}"/>
-            <div>{{ movie.title_kor }}</div>
-        </span>
-        {% endfor %}    
-    </div>
+<form action="" method="get">
+  <input type="text" name="search" value="{{ search }}" />
+  <button type="submit">검색</button>
+</form>
+<a href="{% url 'index' %}"><button type="init">초기화</button></a>
 
+<div>
+  {% for movie in movies %}
+  <a href="{% url 'movies:detail' movie.id %}">
+    <img src="{{movie.poster_url}}" />
+    <div>{{ movie.title_kor }}</div>
+  </a>
+  {% endfor %}
+</div>
 
-    <div class="paginator">
-        {% if movies.has_previous %}
-        <a href="?page=1">처음</a>
-        <a href="?search={{ search }}&?page={{movies.previous_page_number}}">이전</a>
-        {% endif %}
-        <span>{{movies.number}}</span>
-        <span>of</span>
-        <span>{{movies.paginator.num_pages}}</span>
-        {% if movies.has_next %}
-        <a href="?search={{ search }}&?page={{movies.next_page_number}}">다음</a>
-        <a href="?page={{movies.paginator.num_pages}}">마지막</a>
-        {% endif %}
-      </div>
-  
-  </body>
-</html>
+<div class="paginator">
+  {% if movies.has_previous %}
+  <a href="?page=1">처음</a>
+  <a href="?page={{movies.previous_page_number}}">이전</a>
+  {% endif %}
+  <span>{{movies.number}}</span>
+  <span>of</span>
+  <span>{{movies.paginator.num_pages}}</span>
+  {% if movies.has_next %}
+  <a href="?page={{movies.next_page_number}}">다음</a>
+  <a href="?page={{movies.paginator.num_pages}}">마지막</a>
+  {% endif %}
+</div>
+
+{% endblock %}
