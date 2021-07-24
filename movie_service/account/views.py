@@ -8,20 +8,21 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
-            name = form.cleaned_data.get('name')
+            username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = auth.authenticate(
                 request=request,
-                username=name,
+                username=username,
                 password=password
             )
 
             if user is not None:
                 auth.login(request, user)
                 return redirect('index')
-
+        print("\n!!!!!!!!!!!!")
+        print(form.errors)
+        print("!!!!!!!!!1\n")
         return redirect('account:login')
-
     else:
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
@@ -47,16 +48,15 @@ def login_view(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('home')
+    return redirect('index')
 
 def signup(request):
     if request.method == "POST":
-        if request.POST['password'] == request.POST['password2']:
-            user = User.objects.create_user(name=request.POST['name'], password=request.POST['password'])
+        form=SignupForm(request.POST)
+        if form.is_valid():
+            user=form.save()
             auth.login(request, user)
-            return redirect('home')
-        return render(request, 'signup.html')
-        
+            return redirect('index')
         return render(request, 'signup.html')
     
     else:

@@ -1,9 +1,18 @@
-    <h1> 로그인 페이지 </h1>
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<h1> 로그인 페이지 </h1>
         <form action="{% url 'account:login' %}" method="POST">
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit">로그인</button>
-            <button type="submit">로그아웃</button>
+            <a href="{% url 'account:logout' %}">로그아웃</a
+            <a href="{% url 'account:signup' %}">회원가입</a>
         </form>
 
-
+{% endblock %}

@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 import requests
 
-from .models import Staff, Movies,Comment
+from .models import Staff, Movies, Comment
 from .forms import CommentForm
 
 
@@ -11,7 +13,17 @@ from .forms import CommentForm
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    movies = Movies.objects.all()
+    search_keyword = request.GET.get('search', '')
+
+    if search_keyword:
+        movies = movies.filter(title_kor__icontains=search_keyword)
+
+    paginator = Paginator(movies, 8)
+    page = request.GET.get('page')
+    paginated_movies = paginator.get_page(page)
+    return render(request, 'index.html', {'movies': paginated_movies})
+
 
 
 def init_db(request):
@@ -63,4 +75,26 @@ def comment(request,id):
 def detail(request, id):
     movie = Movies.objects.get(id=id)
     staffs = Staff.objects.filter(movie=movie)
-    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs})
+    for staff in staffs:
+        print(staff)
+    comment_form=CommentForm()
+    comments=Comment.objects.filter(movie=movie)
+    for comment in comments:
+        print(comment)
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':comments })
+
+@login_required
+def comment(request,id):
+    movie=get_object_or_404(Movies,pk=id)
+    comments=Comment.objects.filter(movie=movie)
+    if request.method=="POST":
+        form=CommentForm(request.POST)
+        if form.is_valid():
+            new_comment=form.save(commit=False)
+            new_comment.commenter=request.user
+            new_comment.movie=movie
+            new_comment.save()
+            return redirect('movies:detail',id)
+        else:
+            form=CommentForm()
+        return redirect('movies:detail',id)

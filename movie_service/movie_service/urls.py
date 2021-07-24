@@ -39,7 +39,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('db/', movies.views.init_db,name='db'),
     path('movies/', include('movies.urls')),
-    path('index/',movies.views.index,name='index'),
+    path('',movies.views.index,name='index'),
     path('account/', include('account.urls')),
 
 ]
