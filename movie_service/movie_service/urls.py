@@ -19,6 +19,7 @@ import movies.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('db/', movies.views.init_db,name='db'),
-    path('index/',movies.views.index,name='index')
+    path('db/', movies.views.init_db, name='db'),
+    path('', movies.views.index, name='index'),
+    # path('search/<str:search>', movies.views.search, name='search'),
 ]
