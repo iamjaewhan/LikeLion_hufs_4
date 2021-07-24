@@ -11,7 +11,6 @@
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit">로그인</button>
-            <a href="{% url 'account:logout' %}">로그아웃</a
             <a href="{% url 'account:signup' %}">회원가입</a>
         </form>
 

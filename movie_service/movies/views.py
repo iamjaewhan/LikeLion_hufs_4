@@ -55,35 +55,25 @@ def init_db(request):
             new_staff.save()
     return redirect('index')
 
-@login_required
-def comment(request,id):
-    movie=get_object_or_404(Movies,pk=id)
-    comments=Comment.objects.filter(movie=movie)
-    if request.method=="POST":
-        form=CommentForm(request.POST)
-        if form.is_valid:
-            new_comment=form.save(commit=False)
-            new_comment=request.user
-            new_comment.save()
-            return redirect('#디테일페이지 url',id)
-        else:
-            form=CommentForm()
-        return redirect('#디테일페이지#',ㅑㅇ)
-
-
         
 def detail(request, id):
     movie = Movies.objects.get(id=id)
     staffs = Staff.objects.filter(movie=movie)
+
     for staff in staffs:
         print(staff)
     comment_form=CommentForm()
     comments=Comment.objects.filter(movie=movie)
+    total=0
     for comment in comments:
-        print(comment)
-    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':comments })
+        total+=int(comment.rate)
+    if total!=0:
+        rate=round(total/len(comments),2)
+    else:
+        rate="아직 평가가 없습니다"
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':comments,'rate':rate })
 
-@login_required
+@login_required(login_url='account:login')
 def comment(request,id):
     movie=get_object_or_404(Movies,pk=id)
     comments=Comment.objects.filter(movie=movie)
@@ -98,3 +88,4 @@ def comment(request,id):
         else:
             form=CommentForm()
         return redirect('movies:detail',id)
+
