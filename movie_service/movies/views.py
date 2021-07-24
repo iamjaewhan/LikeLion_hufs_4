@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-
-from django.db.models import F
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Staff, Movies, Comment
+from .forms import CommentForm
 import requests
-
-from .models import Staff, Movies
+from django.contrib.auth.decorators import login_required
+from django.db.models import F
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
@@ -27,8 +28,6 @@ def init_db(request):
     res = requests.get(url)
     movies = res.json()['movies']
     for movie in movies:
-
-        # movie의 튜플 저장
         new_movie = Movies()
         new_movie.title_kor = movie['title_kor']
         new_movie.title_eng = movie['title_eng']
@@ -44,7 +43,6 @@ def init_db(request):
         new_movie.save()
 
         staffs = movie['staff']
-        # movie의 먼저 저장
         for staff in staffs:
             new_staff = Staff()
             new_staff.name = staff['name']
@@ -55,6 +53,23 @@ def init_db(request):
     return redirect('index')
 
 
-# def search(request):
-#     movies = Movies.objects.filter(title_kor=search)
-#     return redirect(request, 'index.html', {'movies': movies})
+@login_required
+def comment(request, id):
+    movie = get_object_or_404(Movies, pk=id)
+    comments = Comment.objects.filter(movie=movie)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid:
+            new_comment = form.save(commit=False)
+            new_comment = request.user
+            new_comment.save()
+            return redirect('#디테일페이지 url', id)
+        else:
+            form = CommentForm()
+        return redirect('#디테일페이지#', id)
+
+
+def detail(request, id):
+    movie = Movies.objects.get(id=id)
+    staffs = Staff.objects.filter(movie=movie)
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs})

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% csrf_token %}
+    <h1>Detail page</h1>
+    {% if movie %}
+    <p> {{ movie.title_kor }} </p></br>
+    <p> {{movie.title_eng}} </p></br>
+    <p> {{movie.poster_url}} </p></br>
+    <p> {{movie.rating_aud}} </p></br>
+    <p> {{movie.rating_cri}} </p></br>
+    <p> {{movie.genre}} </p></br>
+    <p> {{movie.showtimes}} </p></br>
+    <p> {{movie.release_date}} </p></br>
+    <p> {{movie.rate}} </p></br>
+    {% endif %}
+    {% for staff in staffs %}
+    <p>{{staff.name}}</p>
+    <p>{{staff.role}}</p>
+    <p>{{staff.image_url}}</p>
+    </br>
+
+
+
+    {% endfor %}
+</body>
+</html>
+
