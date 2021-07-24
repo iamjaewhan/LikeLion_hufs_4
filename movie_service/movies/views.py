@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
+=======
+from django.shortcuts import render,redirect, get_object_or_404
+
+>>>>>>> 25a1731b872f059f512152ac198646f37efc6f24
 import requests
 
 from .models import Staff, Movies,Comment
 from .forms import CommentForm
-
 
 
 
@@ -44,6 +48,7 @@ def init_db(request):
             new_staff.save()
     return redirect('index')
 
+<<<<<<< HEAD
 @login_required
 def comment(request,id):
     movie=get_object_or_404(Movies,pk=id)
@@ -61,3 +66,9 @@ def comment(request,id):
 
 
         
+=======
+def detail(request, id):
+    movie = Movies.objects.get(id=id)
+    staffs = Staff.objects.filter(movie=movie)
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs})
+>>>>>>> 25a1731b872f059f512152ac198646f37efc6f24

@@ -20,5 +20,6 @@ import movies.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('db/', movies.views.init_db,name='db'),
-    path('index/',movies.views.index,name='index')
+    path('movies/', include('movies.urls')),
+    path('index/',movies.views.index,name='index'),
 ]
