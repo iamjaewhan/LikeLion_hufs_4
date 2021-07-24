@@ -4,4 +4,8 @@ from .models import User
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['user_id', 'name', 'password1', 'password2', 'email']
+        fields = ['username', 'name', 'password1', 'password2', 'email']
+        labels={
+            'username':'ID',
+            'passowrd2':'password verification',
+        }

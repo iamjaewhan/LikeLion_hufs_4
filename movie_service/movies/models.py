@@ -1,6 +1,5 @@
 from django.db import models
 from account.models import User
-#from account.models import User
 
 # Create your models here.
 class Movies(models.Model):
