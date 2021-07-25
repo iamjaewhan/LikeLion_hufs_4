@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
 import requests
-
+from django.db.models import Q
 from .models import Staff, Movies, Comment
 from .forms import CommentForm
 
@@ -13,16 +13,25 @@ from .forms import CommentForm
 # Create your views here.
 
 def index(request):
-    movies = Movies.objects.all()
-    search_keyword = request.GET.get('search', '')
+    movies=Movies.objects.all()
+    search= request.GET.get('search', '')
+    print(search)
+    if search:
+        print('if 문 정상 실행됨')
+        movies=movies.filter(
+            Q(title_kor__icontains=search)
+            )
+        paginator = Paginator(movies, 8)
+        page = request.GET.get('page')
+        paginated_movies = paginator.get_page(page)
+        return render(request, 'index.html', {'movies': paginated_movies,'keyword':search})
 
-    if search_keyword:
-        movies = movies.filter(title_kor__icontains=search_keyword)
-
-    paginator = Paginator(movies, 8)
-    page = request.GET.get('page')
-    paginated_movies = paginator.get_page(page)
-    return render(request, 'index.html', {'movies': paginated_movies})
+    else:
+        movies = Movies.objects.all()
+        paginator = Paginator(movies, 8)
+        page = request.GET.get('page')
+        paginated_movies = paginator.get_page(page)
+        return render(request, 'index.html', {'movies': paginated_movies})
 
 
 
@@ -79,8 +88,6 @@ def detail(request, id):
         page=request.GET.get('page')
         paginated_comments=paginator.get_page(page)
         return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':paginated_comments,'rate':rate })
-
-
 
     else:
         rate="아직 평가가 없습니다."
