@@ -16,7 +16,8 @@ def index(request):
     movies=Movies.objects.all()
     search= request.GET.get('search', '')
     print(search)
-    if search:
+    if 'search' in request.GET:   
+        search= request.GET.get('search', '')
         print('if 문 정상 실행됨')
         movies=movies.filter(
             Q(title_kor__icontains=search)

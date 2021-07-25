@@ -22,13 +22,13 @@
 <div class="paginator">
   {% if movies.has_previous %}
   <a href="?page=1">처음</a>
-  <a href="?page={{movies.previous_page_number}}&?search={{keyword}}">이전</a>
+  <a href="?page={{movies.previous_page_number}}&search={{keyword}}">이전</a>
   {% endif %}
   <span>{{movies.number}}</span>
   <span>of</span>
   <span>{{movies.paginator.num_pages}}</span>
   {% if movies.has_next %}
-  <a href="?page={{movies.next_page_number}}&?search={{keyword}}">다음</a>
+  <a href="?page={{movies.next_page_number}}&search={{keyword}}">다음</a>
   <a href="?page={{movies.paginator.num_pages}}">마지막</a>
   {% endif %}
 </div>
