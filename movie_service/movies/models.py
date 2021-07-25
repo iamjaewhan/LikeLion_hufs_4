@@ -16,8 +16,6 @@ class Movies(models.Model):
     summary=models.TextField()
     ##staff=models.ForeignKey(Staff,null=True,on_delete=models.CASCADE)
 
-    def summary(self):
-        return self.summary[:100]
 
 class Staff(models.Model):
     name=models.CharField(max_length=50)

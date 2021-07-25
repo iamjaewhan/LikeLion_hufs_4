@@ -33,6 +33,9 @@
         height: 400px;
         background-size: cover;
     }
+    .container_main1_left{
+        padding:30px;
+    }
     
     .bigcontainer_information{
         display: -ms-flexbox;
@@ -55,7 +58,7 @@
         margin-top:50px;
     }
     hr{
-        width:90%;
+        width:100%;
         color:white;
         text-align=center;
     }
@@ -70,6 +73,7 @@
                 <p> {{movie.title_eng}} </p></br>
                 <p> 관객 평점 : {{movie.rating_aud}} </p></br>
                 <p> 평론가 평점 : {{movie.rating_cri}} </p></br>
+                <p>{{ movie.summary }}</p>
             </div>
             <div class="container_main1_right">
                 <p> <img src="{{movie.poster_url}}" alt="" /></p></br>  
