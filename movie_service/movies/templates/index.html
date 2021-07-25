@@ -125,7 +125,12 @@
 <div class="root">
   <div class="input-container">
     <form action="" style="display: flex; align-items: center" method="get">
-      <input class="search" type="text" name="search" value="{{ search }}" />
+      <input
+        class="search"
+        type="text"
+        name="search"
+        value="{{ search_keyword }}"
+      />
       <button class="search-btn" type="submit">검색</button>
     </form>
     <a href="{% url 'index' %}"
