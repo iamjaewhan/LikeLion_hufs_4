@@ -122,6 +122,14 @@
       .member-btn:hover{
         color:  #df2a1a;
       }
+      .auth-member-tab{
+        display: flex;
+        justify-content: space-evenly;        
+        font-size: 15px;
+        width: 280px;
+        color:  white;
+
+      }
     </style>
   </head>
   <body>
@@ -134,12 +142,21 @@
         <a class="navbar-brand" href="{% url 'index' %}"
         ><div>MUTSABOX</div></a>
   
+        {% if user.is_authenticated %}
+        <div class="auth-member-tab">
+          <div>{{user.name}}님 안녕하세요!</div>
+          <a class="member-btn" 
+          href="{% url "account:logout" %}">Log Out</a>  
+        </div>
+        {% else %}
+
         <div class="member-tap">
           <a class="member-btn" 
-          href="{% url "account:login" %}">Log in</a>
+          href="{% url "account:login" %}">Log In</a>
           <a class="member-btn" href="{% url "account:signup" %}">Sign up</a>
-    
         </div>
+        {% endif %}
+
       </div>
       <div class="container">{% block content %}{% endblock %}</div>
     </div>
