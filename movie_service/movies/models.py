@@ -31,16 +31,3 @@ class Comment(models.Model):
     comment = models.TextField()
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
     rate = models.IntegerField()
-
-# class Staff(models.Model):
-#     name = models.CharField(max_length=50)
-#     role = models.CharField(max_length=50)
-#     image_url = models.CharField(max_length=300)
-#     movie = models.ForeignKey(Movies, null=True, on_delete=models.CASCADE)
-
-
-# class Comment(models.Model):
-#     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
-#     comment = models.TextField()
-#     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
-#     rate = models.IntegerField()
