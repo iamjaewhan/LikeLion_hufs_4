@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-
+    .container_detail{
+        color: white;
+        background-color: rgba(31, 31, 31, 0.7);
+    }
+    .bigcontainer_staff{
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-evenly;
+    }
     .container_staff{
         display: -ms-flexbox; 
         display: flex; 
@@ -10,32 +18,38 @@
         flex: initial;
         align-items: center;
         text-align: center;
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
-    .container_main{
+    .container_main1{
         display: -ms-flexbox; 
         display: flex; 
         flex-direction: row; 
         width: 100%;
-        min-height: 310px;
-        background-image: url("{{movie.poster_url}}");
+        height: 400px;
         background-size: cover;
+    }
+    
+    .bigcontainer_information{
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-evenly;
     }
     .container_information{
         display: -ms-flexbox; 
         display: flex; 
         flex-direction: row; 
         width: 90%;
+        justify-content: space-evenly;
     }
     .staff_img{
         padding-left: 2em;
         padding-right: 2em;
     }
 </style>
-<body>
+<div class="container_detail">
     {% csrf_token %}
     {% if movie %}
-    <div class="container_main">
+    <div class="container_main1">
         <p> {{ movie.title_kor }} </p></br>
         <p> {{movie.title_eng}} </p></br>
         <p> <img src="{{movie.poster_url}}" alt="" /></p></br>
@@ -44,21 +58,28 @@
     </div>
     
     
-    
-    <div class="container_information">
-        <p> {{movie.genre}} </p></br>
-        <p> {{movie.showtimes}} </p></br>
-        <p> {{movie.release_date}} </p></br>
-        <p> {{movie.rate}} </p></br>
+    <div class="bigcontainer_information">
+        <div class="container_information">
+            <p> {{movie.genre}} </p></br>
+            <p> {{movie.showtimes}} </p></br>
+            <p> {{movie.release_date}} </p></br>
+            <p> {{movie.rate}} </p></br>
+        </div>
     </div>
     
+   
     {% endif %}
-    <div class="container_staff">
-        {% for staff in staffs %}
-        <p class="staff_img"><img src="{{staff.image_url}}" alt="" /></br>{{staff.role}} </br> {{staff.name}}  </p>
-        {% endfor %}
+    <div class="bigcontainer_staff">
+        <div class="container_staff">
+            {% for staff in staffs %}
+            <p class="staff_img"><img src="{{staff.image_url}}" alt="" /></br>{{staff.role}} </br> {{staff.name}}  </p>
+            {% endfor %}
+        </div>
     </div>
     
+    <div>
+
+    </div>
     <h1>유저 평점 : {{ rate }}</h1>
 
     <div class="comment_form">
@@ -80,10 +101,11 @@
             <h6>{{ comment.commenter }}</h6>
             <h6>{{ comment.rate }}</h6>
 
+</div>
+
 
 
         {% endfor %}
     {% endif %}
-</body>
 {% endblock %}
 
