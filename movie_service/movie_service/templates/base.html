@@ -58,8 +58,29 @@
         font-style: normal;
       }
 
+      @font-face {
+        font-family: 'NEXON Lv1 Gothic OTF';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+      font-family: 'NEXON Lv1 Gothic OTF Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF Bold.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+  }
+    @font-face {
+      font-family: 'GmarketSansBold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+  }
+
+  
+        
       * {
-        font-family: "paybooc-Bold";
+        font-family: 'NEXON Lv1 Gothic OTF', 'GmarketSansBold', "paybooc-Bold";
         margin: 0;
         padding: 0;
       }
@@ -92,13 +113,14 @@
       .member-tap{
         display: flex;
         justify-content: space-evenly;
-        width: 200px;
+        width: 280px;
         font-size: 15px;
 
       }
       .navbar-brand{
         display: flex;
         justify-content: center;
+        font-family: 'GmarketSansBold';
         font-size: 35px;
         margin: 0;
         padding: 0;

@@ -135,10 +135,10 @@
   <div class="movie-list-container">
     <div class="movie-previous">
       {% if movies.has_previous %}
-      <a href="?page=1"
+      <a href="?search={{search_keyword}}&?page=1"
         ><i class="fas fa-angle-double-left" id="activated-arrow"></i
       ></a>
-      <a href="?page={{movies.previous_page_number}}"
+      <a href="?search={{search_keyword}}&?page={{movies.previous_page_number}}"
         ><i class="fas fa-angle-left" id="activated-arrow"></i
       ></a>
       {% else %}
@@ -160,10 +160,10 @@
 
     <div class="movie-next">
       {% if movies.has_next %}
-      <a href="?page={{movies.next_page_number}}"
+      <a href="?search={{search_keyword}}&page={{movies.next_page_number}}"
         ><i class="fas fa-angle-right" id="activated-arrow"></i>
       </a>
-      <a href="?page={{movies.paginator.num_pages}}"
+      <a href="?search={{search_keyword}}&page={{movies.paginator.num_pages}}"
         ><i class="fas fa-angle-double-right" id="activated-arrow"></i>
       </a>
       {% else %}
