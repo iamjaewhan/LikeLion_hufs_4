@@ -64,13 +64,16 @@ def detail(request, id):
         print(staff)
     comment_form=CommentForm()
     comments=Comment.objects.filter(movie=movie)
-    total=0
-    for comment in comments:
-        total+=int(comment.rate)
-    if total!=0:
-        rate=round(total/len(comments),2)
+    if comments:
+        total=0
+        for comment in comments:
+            total+=int(comment.rate)
+        if total!=0:
+            rate=round(total/len(comments),2)
+        else:
+            rate=0
     else:
-        rate="아직 평가가 없습니다"
+        rate="아직 평가가 없습니다."
     return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':comments,'rate':rate })
 
 @login_required(login_url='account:login')

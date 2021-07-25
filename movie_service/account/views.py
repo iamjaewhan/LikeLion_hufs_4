@@ -19,9 +19,6 @@ def login_view(request):
             if user is not None:
                 auth.login(request, user)
                 return redirect('index')
-        print("\n!!!!!!!!!!!!")
-        print(form.errors)
-        print("!!!!!!!!!1\n")
         return redirect('account:login')
     else:
         form = AuthenticationForm()
