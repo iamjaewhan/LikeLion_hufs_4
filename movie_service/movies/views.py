@@ -74,11 +74,17 @@ def detail(request, id):
         if total != 0:
             rate = round(total/len(comments), 2)
         else:
-            rate = 0
-    else:
-        rate = "아직 평가가 없습니다."
-    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments': comments, 'rate': rate})
+            rate=0
 
+        ##comment paginator
+        paginator=Paginator(comments,5)
+        page=request.GET.get('page')
+        paginated_comments=paginator.get_page(page)
+        return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':paginated_comments,'rate':rate })
+
+    else:
+        rate="아직 평가가 없습니다."
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs,'rate':rate })
 
 @login_required(login_url='account:login')
 def comment(request, id):
