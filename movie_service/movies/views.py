@@ -65,6 +65,7 @@ def detail(request, id):
     comment_form=CommentForm()
     comments=Comment.objects.filter(movie=movie)
     if comments:
+        ##평점구하기
         total=0
         for comment in comments:
             total+=int(comment.rate)
@@ -72,9 +73,18 @@ def detail(request, id):
             rate=round(total/len(comments),2)
         else:
             rate=0
+
+        ##comment paginator
+        paginator=Paginator(comments,5)
+        page=request.GET.get('page')
+        paginated_comments=paginator.get_page(page)
+        return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':paginated_comments,'rate':rate })
+
+
+
     else:
         rate="아직 평가가 없습니다."
-    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':comments,'rate':rate })
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs,'rate':rate })
 
 @login_required(login_url='account:login')
 def comment(request,id):
