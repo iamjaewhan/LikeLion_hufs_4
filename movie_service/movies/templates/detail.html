@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .container_detail{
+        color: white;
+        background-color: rgba(31, 31, 31, 0.7);
+    }
+    .bigcontainer_staff{
+        margin-top:50px;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .container_staff{
+        display: -ms-flexbox; 
+        display: flex; 
+        flex-wrap:wrap;
+        flex-direction: row; 
+        width: 90%;
+        flex: initial;
+        align-items: center;
+        text-align: center;
+        justify-content: space-evenly;
+    }
+    .container_main1{
+        padding:30px;
+        display: -ms-flexbox; 
+        display: flex; 
+        flex-direction: row; 
+        justify-content:space-around;
+        width: 100%;      
+    
+        background-size: cover;
+    }
+    .container_main1_left{
+        padding:30px;
+    }
+    
+    .bigcontainer_information{
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .container_information{
+        display: -ms-flexbox; 
+        display: flex; 
+        flex-direction: row; 
+        width: 90%;
+        justify-content: space-evenly;
+    }
+    .staff_img{
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+    
+    .comment_form{
+        margin-top:50px;
+    }
+    hr{
+        width:100%;
+        color:white;
+        text-align: center;
+    }
+    .container_comment{
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+    .comment_comment{
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+    .comment_1{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .comment_box {
+    width: 500px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    border-radius: 30px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url("https://ifh.cc/g/J9L7Jl.png");
+    background-size: 21px;
+    background-position: 12px 11px;
+    background-repeat: no-repeat;
+    padding: 10px 18px 10px 48px;
+    transition: all 0.3s ease 0s;
+  }
+  .comment_box:focus {
+    outline: none;
+    border: 3px solid #df2a1a;
+  }
+
+  .user_rate{
+      width: 120px;
+      height: 30px;
+  }
+
+  .comment_btn {
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #df2a1a;
+    padding: 15px;
+    border-radius: 20px;
+    display: inline-block;
+    border: none;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+  }
+  .comment_btn-btn:hover {
+    background: #85150b;
+  }
+
+
+</style>
+    <div class="container_detail">
+        {% csrf_token %}
+        {% if movie %}
+        <div class="container_main1">
+            <div class="container_main1_left">
+                <p> {{ movie.title_kor }} </p></br>
+                <p> {{movie.title_eng}} </p></br>
+                <p> 관객 평점 : {{movie.rating_aud}} </p></br>
+                <p> 평론가 평점 : {{movie.rating_cri}} </p></br>
+                <p> 유저 평점 : {{ rate }}</p></br>
+                <p>{{ movie.summary }}</p></br>
+                
+            </div>
+            <div class="container_main1_right">
+                <p> <img src="{{movie.poster_url}}" alt="" /></p></br>  
+            </div>
+        </div>
+
+        <div>
+        <hr class="div_line">
+        </div>
+
+        <div class="bigcontainer_information">
+            <div class="container_information">
+                <p> {{movie.genre}} </p></br>
+                <p> {{movie.showtimes}} </p></br>
+                <p> {{movie.release_date}} </p></br>
+                <p> {{movie.rate}} </p></br>
+    
+            </div>
+        </div>
+
+        <div class="div_line">
+            <hr >
+        </div>
+
+    
+        {% endif %}
+        <div class="bigcontainer_staff">
+            <div class="container_staff">
+                {% for staff in staffs %}
+                <p class="staff_img"><img src="{{staff.image_url}}" alt="" /></br>{{staff.role}} </br> {{staff.name}}  </p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="div_line">
+        <hr>
+        </div>
+        <div class="container_comment">
+            <div class="comment_form">
+                
+                <form action="{% url 'movies:comment' movie.id %}" method="POST">
+                    {% csrf_token %}
+                    <p class="comment_1">
+                        <textarea class="comment_box" type="text" name="comment" placeholder="Leave Comment!"></textarea>  
+                        <input class="user_rate" placeholder="Rate" type="number" min='0' max='10' name="rate">
+                        <button class="comment_btn" type="submit">comment</button>
+
+                    </p>
+    
+                </form>
+            </div>
+        </div>
+        
+
+       
+
+        {% if comments %}
+
+            {% for comment in comments %}
+            
+            <div class="comment_comment">
+                <h6>{{ comment.commenter }}</h6>
+                <h6>{{ comment.comment }}</h6>
+ 
+                <h6>{{ comment.rate }}</h6>
+            </div>
+
+    
+
+
+        {% endfor %}
+
+
+            <div class="comment_paginator">
+                {% if comments.has_previous %}
+                <a href="?page=1">처음</a>
+                <a href="?page={{comments.previous_page_number}}">이전</a>
+                {% endif %}
+                <span>{{comments.number}}</span>
+                <span>of</span>
+                <span>{{comments.paginator.num_pages}}</span>
+                {% if comments.has_next %}
+                <a href="?page={{comments.next_page_number}}">다음</a>
+                <a href="?page={{comments.paginator.num_pages}}">마지막</a>
+                {% endif %}
+            </div>
+        
+    
+    </div>
+
+
+    {% endif %}
+{% endblock %}
+

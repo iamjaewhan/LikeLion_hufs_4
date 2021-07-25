@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+    <title>Movie Service</title>
+    <style>
+      @keyframes Palette {
+        0% {
+          background: #90f1ef;
+        }
+        25% {
+          background: #ffd6e0;
+        }
+        50% {
+          background: #ffef9f;
+        }
+        75% {
+          background: #c1fba4;
+        }
+        100% {
+          background: #cddafd;
+        }
+      }
+      @font-face {
+        font-family: "GongGothicMedium";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Pretendard-Regular";
+        src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+          format("woff");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "paybooc-Bold";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: 'NEXON Lv1 Gothic OTF';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+      font-family: 'NEXON Lv1 Gothic OTF Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF Bold.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+  }
+    @font-face {
+      font-family: 'GmarketSansBold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+  }
+
+  
+        
+      * {
+        font-family: 'NEXON Lv1 Gothic OTF', 'GmarketSansBold', "paybooc-Bold";
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-image: url("/static/theater.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100%;
+        overflow: auto;
+
+      }
+      .base-root{
+
+      }
+
+      .nav-bar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px rgb(77, 77, 77);
+        font-size: 10px;
+        height: 80px;
+      }
+      .member-tap{
+        display: flex;
+        justify-content: space-evenly;
+        width: 280px;
+        font-size: 15px;
+
+      }
+      .navbar-brand{
+        display: flex;
+        justify-content: center;
+        font-family: 'GmarketSansBold';
+        font-size: 35px;
+        margin: 0;
+        padding: 0;
+        color:  #df2a1a;
+        font-weight: 900;
+      }
+      .navbar-brand:hover{
+        color:  #df2a1a;
+
+      }
+      .container {
+        padding: 0;
+        width: 100%;
+      }
+      .member-btn {
+        color: white; 
+        text-decoration: none;
+        transition: all 0.3s ease 0s;
+
+      }
+      .member-btn:hover{
+        color:  #df2a1a;
+      }
+      .auth-member-tab{
+        display: flex;
+        justify-content: space-evenly;        
+        font-size: 15px;
+        width: 280px;
+        color:  white;
+
+      }
+    </style>
+  </head>
+  <body>
+  {% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+    <div class="base-root">
+      {% load static %}
+      <div class="nav-bar">
+        <div class="member-tap">
+  
+        </div>
+        <a class="navbar-brand" href="{% url 'index' %}"
+        ><div style="font-family: 'GmarketSansBold'; margin-top:10px">MUTSABOX</div></a>
+  
+        {% if user.is_authenticated %}
+        <div class="auth-member-tab">
+          <div>{{user.name}}님 안녕하세요!</div>
+          <a class="member-btn" 
+          href="{% url "account:logout" %}">Log Out</a>  
+        </div>
+        {% else %}
+
+        <div class="member-tap">
+          <a class="member-btn" 
+          href="{% url "account:login" %}">Log In</a>
+          <a class="member-btn" href="{% url "account:signup" %}">Sign up</a>
+        </div>
+        {% endif %}
+
+      </div>
+      <div class="container">{% block content %}{% endblock %}</div>
+    </div>
+  </body>
+</html>
