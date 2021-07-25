@@ -21,12 +21,14 @@
     </br>
     {% endfor %}
 
+    <h1>유저 평점 : {{ rate }}</h1>
+
     <div class="comment_form">
         <form action="{% url 'movies:comment' movie.id %}" method="POST">
             <h1>Comment Here</h1>
             {% csrf_token %}
             <p>Comment :<input type="text" name="comment"></p>
-            <p>Rate : <input type="text" name="rate"></p>
+            <p>Rate : <input type="number" min='0' max='10' name="rate"></p>
 
         <button type="submit">comment</button>
         </form>
