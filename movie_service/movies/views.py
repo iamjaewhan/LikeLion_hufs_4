@@ -1,4 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
+import requests
+
 from .models import Staff, Movies, Comment
 from .forms import CommentForm
 import requests
@@ -53,23 +58,39 @@ def init_db(request):
     return redirect('index')
 
 
-@login_required
+def detail(request, id):
+    movie = Movies.objects.get(id=id)
+    staffs = Staff.objects.filter(movie=movie)
+
+    for staff in staffs:
+        print(staff)
+    comment_form = CommentForm()
+    comments = Comment.objects.filter(movie=movie)
+    if comments:
+        total = 0
+        for comment in comments:
+            total += int(comment.rate)
+        if total != 0:
+            rate = round(total/len(comments), 2)
+        else:
+            rate = 0
+    else:
+        rate = "아직 평가가 없습니다."
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments': comments, 'rate': rate})
+
+
+@login_required(login_url='account:login')
 def comment(request, id):
     movie = get_object_or_404(Movies, pk=id)
     comments = Comment.objects.filter(movie=movie)
     if request.method == "POST":
         form = CommentForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             new_comment = form.save(commit=False)
-            new_comment = request.user
+            new_comment.commenter = request.user
+            new_comment.movie = movie
             new_comment.save()
-            return redirect('#디테일페이지 url', id)
+            return redirect('movies:detail', id)
         else:
             form = CommentForm()
-        return redirect('#디테일페이지#', id)
-
-
-def detail(request, id):
-    movie = Movies.objects.get(id=id)
-    staffs = Staff.objects.filter(movie=movie)
-    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs})
+        return redirect('movies:detail', id)

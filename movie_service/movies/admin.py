@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Staff,Movies,Comment
+from .models import Staff,Movies, Comment
 from account.models import User
 
 
