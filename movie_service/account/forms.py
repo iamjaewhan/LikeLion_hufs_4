@@ -2,14 +2,16 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django import forms
 
+
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'name', 'password1', 'password2', 'email']
-        labels={
-            'username':'ID',
-            'passowrd2':'password verification',
+        labels = {
+            'username': 'ID',
+            'password2': 'password verification',
         }
+
 
 class UserCreateForm(UserCreationForm):
     class Meta:
@@ -22,7 +24,7 @@ class UserCreateForm(UserCreationForm):
         # }
 
     def __init__(self, *args, **kwargs):
-            super(UserCreateForm, self).__init__(*args, **kwargs)
+        super(UserCreateForm, self).__init__(*args, **kwargs)
 
-            for fieldname in ['username', 'password1', 'password2']:
-                self.fields[fieldname].help_text = None
+        for fieldname in ['username', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
