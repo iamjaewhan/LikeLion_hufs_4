@@ -1,6 +1,41 @@
-    <h1> 회원 가입 </h1>
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .helptext {
+        display: none;
+    }
+    .ul {
+        list-style: none;
+    }
+</style>
+    <p>
+        <h style="background-color: darkblue; color: white; font-weight: bold; width:70px; height:50px; text-align: center;">M</h>
+        <h style="background-color: darkblue; color: white; font-weight: bold; width:70px; height:50px; text-align: center;">U</h>
+        <h style="background-color: darkblue; color: white; font-weight: bold; width:70px; height:50px; text-align: center;">T</h>
+        <h style="background-color: darkblue; color: white; font-weight: bold; width:70px; height:50px; text-align: center;">S</h>
+        <h style="background-color: darkblue; color: white; font-weight: bold; width:70px; height:50px; text-align: center;">A</h>
+        <h style="background-color: darkblue; color: white; font-weight: bold; width:70px; height:50px; text-align: center;">B</h>
+        <h style="background-color: darkblue; color: white; font-weight: bold; width:70px; height:50px; text-align: center;">O</h>
+        <h style="background-color: darkblue; color: white; font-weight: bold;  width:70px; height:50px; text-align: center;">X</h>
+        <br/>
+        <h style="color: darkblue; font-weight: bold; font-size: 15px; background-color: white; width: 100px; text-align: center; height: 20px;">Life theater</h>
+    </p>
+
     <form action="{% url 'account:signup' %}" method="POST">
+    <div class = "container" style="background-color: white; width: 450px; height: 450px; border-style: outset; border-top-width: 3px; border-right-width: 3px; border-left-width: 5px; border-bottom-width: 5px; border-top-width: 5px; border-right-width: 5px; border-radius: 3px; border-top-color: navy; border-left-color: darkblue; padding-top: 60px;">
         {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">회원가입</button>
-      </form>
+    <form action = "{% url 'account:signup' %}"
+    method = "POST">
+        <p style="padding-left: 90px;">ID: <input type="text" name = "username"></p>
+        <p style="padding-left: 45px;">비밀번호: <input type="text" name="password1" ></p>
+            <h5 style="padding-left: 100px; text-align: left; font-size: 10px;"> Your password can't be too similar to your other personal information.</h5>
+            <h5 style="padding-left: 100px; text-align: left; font-size: 10px;"> Your password must contain at least 8 characters.</h5>
+            <h5 style="padding-left: 100px; text-align: left; font-size: 10px;"> Your password can't be a commonly used password.</h5>
+            <h5 style="padding-left: 100px; text-align: left; font-size: 10px;"> Your password can't be entirely numeric. </h5>
+        <p style="padding-left: 0px;">비밀번호 확인: <input type= "text" name="password2"></p>
+        <p style="padding-left: 55px;">Email: <textarea name = "email" cols="20" rows="1"></textarea></p>
+    </form>
+    </div>
+        <button type="submit" style="margin-top: 10px;">회원가입</button>
+    </form>
+{% endblock %}
