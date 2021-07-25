@@ -57,8 +57,7 @@ def signup(request):
             user = form.save()
             auth.login(request, user)
             return redirect('index')
-        return render(request, 'signup.html')
-
+        return redirect('account:signup')
     else:
         form = SignupForm()
         return render(request, 'signup.html', {'form': form})

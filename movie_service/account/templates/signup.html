@@ -1,6 +1,161 @@
-    <h1> 회원 가입 </h1>
-    <form action="{% url 'account:signup' %}" method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">회원가입</button>
-      </form>
+{% extends "base.html" %} {% block content %}
+<style>
+  .helptext {
+    display: none;
+  }
+  ul {
+    list-style: none;
+    display: none;
+  }
+  .signup-form-container {
+    margin-top: 20px;
+  }
+  .signup-btn {
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #df2a1a;
+    padding: 15px;
+    border-radius: 20px;
+    display: inline-block;
+    border: none;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+  }
+  .signup-btn:hover {
+    background: #85150b;
+  }
+</style>
+
+<div
+  class="container"
+  style="
+    background-color: white;
+    width: 450px;
+    height: 430px;
+    border-style: outset;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-left-width: 5px;
+    border-bottom-width: 5px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-radius: 3px;
+    border-top-color: navy;
+    border-left-color: darkblue;
+    margin-top: 50px;
+    padding-top: 40px;
+  "
+>
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >M</h
+  >
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >U</h
+  >
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >T</h
+  >
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >S</h
+  >
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >A</h
+  >
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >B</h
+  >
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >O</h
+  >
+  <h
+    style="
+      background-color: darkblue;
+      color: white;
+      font-weight: bold;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+    "
+    >X</h
+  >
+  <br />
+  <h
+    style="
+      color: darkblue;
+      font-weight: bold;
+      font-size: 15px;
+      background-color: white;
+      width: 100px;
+      text-align: center;
+      height: 20px;
+    "
+    >Life theater</h
+  >
+
+  <form
+    class="signup-form-container"
+    action="{% url 'account:signup' %}"
+    method="POST"
+  >
+    {% csrf_token %} {{form.as_p}}
+    <button class="signup-btn" type="submit">회원가입</button>
+  </form>
+  {% endblock %}
+</div>
