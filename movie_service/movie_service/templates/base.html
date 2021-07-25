@@ -14,84 +14,134 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
     <title>Movie Service</title>
     <style>
+      @keyframes Palette {
+        0% {
+          background: #90f1ef;
+        }
+        25% {
+          background: #ffd6e0;
+        }
+        50% {
+          background: #ffef9f;
+        }
+        75% {
+          background: #c1fba4;
+        }
+        100% {
+          background: #cddafd;
+        }
+      }
+      @font-face {
+        font-family: "GongGothicMedium";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Pretendard-Regular";
+        src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+          format("woff");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "paybooc-Bold";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      * {
+        font-family: "paybooc-Bold";
+        margin: 0;
+        padding: 0;
+      }
+
       body {
         text-align: center;
+        margin: 0;
+        padding: 0;
+        background-image: url("/static/theater.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100%;
+        overflow: auto;
+
       }
-      .logo {
-        width: 80px;
+      .base-root{
+
+      }
+
+      .nav-bar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px rgb(77, 77, 77);
+        font-size: 10px;
+        height: 80px;
+      }
+      .member-tap{
+        display: flex;
+        justify-content: space-evenly;
+        width: 200px;
+        font-size: 15px;
+
+      }
+      .navbar-brand{
+        display: flex;
+        justify-content: center;
+        font-size: 35px;
+        margin: 0;
+        padding: 0;
+        color:  #df2a1a;
+        font-weight: 900;
+      }
+      .navbar-brand:hover{
+        color:  #df2a1a;
+
+      }
+      .container {
+        padding: 0;
+        width: 100%;
+      }
+      .member-btn {
+        color: white; 
+        text-decoration: none;
+        transition: all 0.3s ease 0s;
+
+      }
+      .member-btn:hover{
+        color:  #df2a1a;
       }
     </style>
   </head>
   <body>
-    {% load static %}
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
+    <div class="base-root">
+      {% load static %}
+      <div class="nav-bar">
+        <div class="member-tap">
+  
+        </div>
         <a class="navbar-brand" href="{% url 'index' %}"
-          ><img class="logo" src="{% static 'likelion.png' %}" alt=""
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
-              >
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+        ><div>MUTSABOX</div></a>
+  
+        <div class="member-tap">
+          <a class="member-btn" 
+          href="{% url "account:login" %}">Log in</a>
+          <a class="member-btn" href="{% url "account:signup" %}">Sign up</a>
+    
         </div>
       </div>
-    </nav>
-    <div class="container">{% block content %}{% endblock %}</div>
+      <div class="container">{% block content %}{% endblock %}</div>
+    </div>
   </body>
 </html>

@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends 'base.html' %}
+{% block content %}
 <body>
     {% csrf_token %}
     <h1>Detail page</h1>
@@ -25,10 +19,33 @@
     <p>{{staff.role}}</p>
     <p>{{staff.image_url}}</p>
     </br>
-
-
-
     {% endfor %}
+
+    <h1>유저 평점 : {{ rate }}</h1>
+
+    <div class="comment_form">
+        <form action="{% url 'movies:comment' movie.id %}" method="POST">
+            <h1>Comment Here</h1>
+            {% csrf_token %}
+            <p>Comment :<input type="text" name="comment"></p>
+            <p>Rate : <input type="number" min='0' max='10' name="rate"></p>
+
+        <button type="submit">comment</button>
+        </form>
+    </div>
+
+
+
+    {% if comments %}
+        {% for comment in comments %}
+            <h6>{{ comment.comment }}</h6>
+            <h6>{{ comment.commenter }}</h6>
+            <h6>{{ comment.rate }}</h6>
+
+
+
+        {% endfor %}
+    {% endif %}
 </body>
-</html>
+{% endblock %}
 
