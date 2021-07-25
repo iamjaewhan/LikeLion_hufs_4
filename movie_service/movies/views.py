@@ -64,30 +64,33 @@ def detail(request, id):
 
     for staff in staffs:
         print(staff)
-    comment_form=CommentForm()
-    comments=Comment.objects.filter(movie=movie)
-    total=0
-    for comment in comments:
-        total+=int(comment.rate)
-    if total!=0:
-        rate=round(total/len(comments),2)
+    comment_form = CommentForm()
+    comments = Comment.objects.filter(movie=movie)
+    if comments:
+        total = 0
+        for comment in comments:
+            total += int(comment.rate)
+        if total != 0:
+            rate = round(total/len(comments), 2)
+        else:
+            rate = 0
     else:
-        rate="아직 평가가 없습니다"
-    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments':comments,'rate':rate })
+        rate = "아직 평가가 없습니다."
+    return render(request, 'detail.html', {'movie': movie, 'staffs': staffs, 'comments': comments, 'rate': rate})
+
 
 @login_required(login_url='account:login')
-def comment(request,id):
-    movie=get_object_or_404(Movies,pk=id)
-    comments=Comment.objects.filter(movie=movie)
-    if request.method=="POST":
-        form=CommentForm(request.POST)
+def comment(request, id):
+    movie = get_object_or_404(Movies, pk=id)
+    comments = Comment.objects.filter(movie=movie)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
         if form.is_valid():
-            new_comment=form.save(commit=False)
-            new_comment.commenter=request.user
-            new_comment.movie=movie
+            new_comment = form.save(commit=False)
+            new_comment.commenter = request.user
+            new_comment.movie = movie
             new_comment.save()
-            return redirect('movies:detail',id)
+            return redirect('movies:detail', id)
         else:
-            form=CommentForm()
-        return redirect('movies:detail',id)
-
+            form = CommentForm()
+        return redirect('movies:detail', id)

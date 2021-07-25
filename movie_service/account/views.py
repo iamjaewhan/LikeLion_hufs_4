@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from .forms import SignupForm
 
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
@@ -19,9 +20,6 @@ def login_view(request):
             if user is not None:
                 auth.login(request, user)
                 return redirect('index')
-        print("\n!!!!!!!!!!!!")
-        print(form.errors)
-        print("!!!!!!!!!1\n")
         return redirect('account:login')
     else:
         form = AuthenticationForm()
@@ -46,19 +44,21 @@ def login_view(request):
 #             form = AuthenticationForm()
 #             return render(request, 'login.html', {'error': 'name or password is incoreect'})
 
+
 def logout(request):
     auth.logout(request)
     return redirect('index')
 
+
 def signup(request):
     if request.method == "POST":
-        form=SignupForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
-            user=form.save()
+            user = form.save()
             auth.login(request, user)
             return redirect('index')
         return render(request, 'signup.html')
-    
+
     else:
-        form=SignupForm()
-        return render(request, 'signup.html', {'form':form})
+        form = SignupForm()
+        return render(request, 'signup.html', {'form': form})
