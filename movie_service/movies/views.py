@@ -18,14 +18,15 @@ from django.shortcuts import render, redirect
 def index(request):
     movies = Movies.objects.all()
     search_keyword = request.GET.get('search', '')
-
     if search_keyword:
         movies = movies.filter(title_kor__icontains=search_keyword)
-
     paginator = Paginator(movies, 8)
     page = request.GET.get('page')
     paginated_movies = paginator.get_page(page)
-    return render(request, 'index.html', {'movies': paginated_movies})
+    if search_keyword:
+        return render(request, 'index.html', {'movies': paginated_movies, 'search_keyword': search_keyword})
+    else:
+        return render(request, 'index.html', {'movies': paginated_movies})
 
 
 def init_db(request):
